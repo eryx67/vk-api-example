@@ -1,0 +1,6 @@
+[submodule "deps/api-builder"]
+	path = deps/api-builder
+	url = https://github.com/eryx67/api-builder.git
+[submodule "deps/vk-api"]
+	path = deps/vk-api
+	url = https://github.com/eryx67/vk-api.git

@@ -1,0 +1,145 @@
+name:                   vk-api-example
+version:                1.0.0
+author:                 eryx67 <eryx67@gmail.com>
+maintainer:             eryx67 <eryx67@gmail.com>
+license:                BSD3
+license-file:           LICENSE
+-- Synopsis:
+-- Description:
+cabal-version:          >= 1.10
+build-type:             Simple
+extra-source-files:     README.md
+                      , ChangeLog.md
+                      , example/css/*.css
+                      , example/js/*.js
+                      , example/fonts/*.eot
+                      , example/fonts/*.svg
+                      , example/fonts/*.ttf
+                      , example/fonts/*.woff
+                      , example/fonts/*.woff2
+                      , example/*.html
+
+flag debug
+     description: Enable debug
+     default: False
+
+library
+  default-language:     Haskell2010
+  hs-source-dirs:       src
+  ghc-options:          -Wall
+  js-sources: jsbits/xhr.js
+  exposed-modules: VK.DOM.Router
+                 , VK.App.Internal.Orphans
+                 , VK.App.Internal.TypePlugs
+                 , VK.App.Internal.Utils
+                 , VK.App.AppSettings
+                 , VK.App.Types
+                 , VK.App.Actions.Types
+                 , VK.App.Actions
+                 , VK.App.Store
+                 , VK.App.Models
+                 , VK.App.Widgets.Internal.IdleTimer
+                 , VK.App.Widgets.AudioPlayer.Types
+                 , VK.App.Widgets.AudioPlayer.Store
+                 , VK.App.Widgets.AudioPlayer.Actions
+                 , VK.App.Widgets.AudioPlayer.Views
+                 , VK.App.Widgets.AudioPlayer
+                 , VK.App.Widgets.Pagination
+                 , VK.App.Widgets.IncrementalInput
+                 , VK.App.Widgets.ErrorMessage
+                 , VK.App.Widgets
+                 , VK.App.Views
+                 , VK.App
+
+  -- other-modules:
+  build-depends:        aeson
+                      , api-builder
+                      , deepseq
+                      , data-default-generics
+                      , parsec
+                      , base >= 4.8 && < 5
+                      , bytestring
+                      , react-flux
+                      , scientific
+                      , split
+                      , template-haskell
+                      , text
+                      , text-format
+                      , time
+                      , transformers
+                      , web-routes
+                      , web-routes-th
+                      , errors
+                      , fraction
+                      , containers
+                      , timers
+                      , suspend
+                      , vk-api
+  default-extensions: CPP
+
+  if impl(ghcjs)
+      build-depends: ghcjs-base
+  if !impl(ghcjs)
+        build-depends: http-client
+                     , http-client-tls
+  if flag(debug)
+    ghc-options: -DDEBUG
+
+executable vk
+   ghc-options: -Wall
+   cpp-options: -DGHCJS_BROWSER
+   default-language: Haskell2010
+   hs-source-dirs: executable
+   main-is: Main.hs
+   build-depends: api-builder
+                , base
+                , blaze-builder
+                , crypto-api
+                , data-default-generics
+                , deepseq
+                , http-types
+                , react-flux
+                , template-haskell
+                , text
+                , text-format
+                , vk-api
+                , vk-api-example
+  default-extensions: CPP
+  if impl(ghcjs)
+     build-depends: ghcjs-base
+  if !impl(ghcjs)
+     build-depends: http-client
+                  , http-client-tls
+
+test-suite spec
+  type:                 exitcode-stdio-1.0
+  default-language:     Haskell2010
+  hs-source-dirs:       test
+  ghc-options:          -Wall
+  main-is:              Spec.hs
+  build-depends:        base
+                      , hspec
+                      , webdriver
+                      , hspec-webdriver
+                      , directory
+                      , http-client
+                      , http-client-tls
+                      , http-types
+                      , transformers
+                      , text
+                      , bytestring
+                      , aeson
+                      , time
+                      , api-builder
+                      , errors
+                      , split
+                      , template-haskell
+                      , parsec
+                      , scientific
+                      , vk-api
+  default-extensions: CPP
+source-repository head
+  Type:                 git
+
+
+--  Location:
